@@ -1,0 +1,53 @@
+<div class="container mx-auto p-8">
+  <h1 class="text-3xl font-bold">Room Details</h1>
+  
+    <div class="flex flex-wrap">
+    <% @room.beds.each do |bed| %>
+        <div class="flex-1 p-4 flex flex-col">
+        <% if bed.resident_id.nil? %>
+            <div class="bg-gray-100 p-4 rounded-md flex-grow">
+            <p><%= bed.bedsize.titleize %> Available</p>
+            <div class="assign_bed" data-bed_id="<%= bed.id %>">
+                <%= form_tag(assign_resident_bed_path, method: :put) do %>
+                <%= hidden_field_tag :bed_id, bed.id %>
+                <%= select_tag(:resident_id, options_for_select(Resident.unassigned_residents.map { |r| [r.fullname, r.id] }), prompt: "Select Resident", class: "p-1 w-full rounded-md border border-gray-300") %>
+                <%= submit_tag "Assign Resident", class: "mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" %>
+                <% end %>
+            </div>
+            </div>
+        <% else %>
+            <div class="bg-gray-100 p-4 rounded-md flex-grow">
+            <p>Occupied by: <%= link_to "#{bed.resident.fullname}", resident_path(id: bed.resident.id) %></p>
+            <%= form_tag(remove_occupant_bed_path, method: :put) do %>
+                <%= hidden_field_tag :bed_id, bed.id %>
+                <%= submit_tag "Remove Resident", class: "mt-2 bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded" %>
+            <% end %>
+            </div>
+        <% end %>
+        </div>
+    <% end %>
+    </div>
+  <div class="p-4 mt-8">
+    <div class="bg-gray-100 p-4 rounded-md">
+      <%= form_tag(add_bed_room_path, method: :post) do %>
+        <%= select_tag :bed_size, options_for_select(Bed.bed_sizes), prompt: "Bed Size", class: "p-1 w-full rounded-md border border-gray-300" %>
+        <%= submit_tag "Add Bed", class: "mt-2 bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const assignButtons = document.querySelectorAll('.assign_bed_btn');
+
+    assignButtons.forEach(button => {
+        button.addEventListener('click', () => {
+        const bedId = button.dataset.id;
+        const assignBedDiv = document.querySelector(`.assign_bed[data-bed_id="${bedId}"]`);
+        assignBedDiv.style.display = 'block';
+        button.style.display = 'none';
+        });
+    });
+    });
+</script>

@@ -1,0 +1,56 @@
+<div class="container mx-auto p-8">
+    <h1 class="text-3xl font-bold">Welcome, <%= current_user.first_name %>!</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+        <div class="bg-gray-100 p-4 rounded-md">
+            <h2 class="text-lg font-semibold" style="display: inline-block;">My Managed Houses</h2>
+            <span class="text-sm text-gray-500" style="display: inline-block;">- <%= "#{House.total_occupants_for_manager(current_user.id)} Total Managed Beds Filled" %></span>
+            <ul class="list-disc list-inside">
+                <% @manager.houses.each do |house| %>
+                    <li>
+                        <%= link_to house.address, house_path(house.id), class: "text-blue-500 hover:underline" %> <span class="text-sm text-gray-500">- <%= "#{house.occupied_beds.count} Beds Filled" %></span>
+                    </li>
+                <% end %>
+            </ul>
+        </div>
+
+        <% if current_user.is_admin? %>
+            <div class="bg-gray-100 p-4 rounded-md">
+                <h2 class="text-lg font-semibold" style="display: inline-block;">All Houses</h2>
+                <span class="text-sm text-gray-500" style="display: inline-block;">- <%= "#{Bed.where(resident_id: nil).count}/#{Bed.all.count} Total Beds Available" %></span>
+                <ul class="list-disc list-inside">
+                    <% House.all.each do |house| %>
+                        <li>
+                            <%= link_to house.address, house_path(house.id), class: "text-blue-500 hover:underline" %>
+                            <% if house.available_beds.present? %>
+                                <span class="text-sm text-gray-500">- <%= "#{house.available_beds.count} Beds Available" %></span>
+                            <% end %>
+                        </li>
+                    <% end %>
+                </ul>
+            </div>
+        <% end %>
+    </div>
+
+    <div class="mt-8">
+        <%= link_to "Add House", new_house_path, class: "inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" %>
+    </div>
+
+    <div class="bg-gray-100 p-4 rounded-md mt-8">
+        <h2 class="text-lg font-semibold">Residents</h2>
+        <ul class="list-disc list-inside">
+            <% Resident.all.each do |resident| %>
+                <li>
+                    <%= link_to resident.fullname, resident_path(resident.id), class: "text-blue-500 hover:underline" %>
+                    <span class="text-sm text-gray-500"> -
+                        <%= resident.bed_id.nil? ? "Unassigned" : "Assigned to #{resident.bed.room.house.address}" %>
+                    </span>
+                </li>
+            <% end %>
+        </ul>
+    </div>
+    
+    <div class="mt-8">
+        <%= link_to "Add Resident", new_resident_path, class: "inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" %>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="container mx-auto p-8">
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h1 class="text-3xl font-bold">Add New Resident</h1>
+        <%= form_with model: @resident, class: "mt-8" do |form| %>
+            <div class="mt-4">
+                <%= form.label :first_name, class: "block text-gray-700 text-sm font-bold mb-2" %><br>
+                <%= form.text_field :first_name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+            </div>
+
+            <div class="mt-4">
+                <%= form.label :last_name, class: "block text-gray-700 text-sm font-bold mb-2" %><br>
+                <%= form.text_field :last_name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+            </div>
+
+            <div class="mt-4">
+                <%= form.label :dob, class: "block text-gray-700 text-sm font-bold mb-2" %><br>
+                <%= form.date_field :dob, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+            </div>
+
+            <div class="mt-4">
+                <%= form.label :phone, class: "block text-gray-700 text-sm font-bold mb-2" %><br>
+                <%= form.text_field :phone, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+            </div>
+
+            <div class="mt-4">
+                <%= form.label :gender, class: "block text-gray-700 text-sm font-bold mb-2" %><br>
+                <%= form.select :gender, options_for_select(["Male", "Female"]), class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+            </div>
+
+            <div class="mt-8">
+                <%= form.submit "Add Resident", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+            </div>
+        <% end %>
+    </div>
+</div>

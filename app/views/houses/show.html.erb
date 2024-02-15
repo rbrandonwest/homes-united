@@ -1,0 +1,22 @@
+<div class="container mx-auto p-8">
+  <h1 class="text-3xl font-bold pl-4"><%= @house.full_address %></h1>
+  
+  <h2 class="text-lg font-semibold mt-8 pl-4">Rooms</h2>
+  <div class="flex flex-wrap">
+    <% room_num = 0 %>
+    <% @house.rooms.each do |room| %>
+      <% room_num += 1 %>
+      <div class="flex-1 p-4" style="display: flex; flex-direction: column;">
+        <div class="bg-gray-100 p-4 rounded-md" style="flex-grow: 1;">
+          <h3 style="display: inline-block;"><%= link_to "Room #{room_num}", room_path(room.id), class: "text-blue-500 hover:underline" %></h3>
+          <span class="text-sm text-gray-500" style="display: inline-block;">Available Beds: <%= room.available_beds.count %>/<%= room.beds.count %></span>
+          <div>
+          <% room.occupants.each do |occupant| %>
+            <li><%= occupant.fullname %></li>
+          <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

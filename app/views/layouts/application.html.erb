@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HomesUnited</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <div class="bg-gray-200">
+      <div class="container mx-auto">
+        <nav class="flex justify-between items-center p-4">
+          <div>
+            <%= link_to 'Home', root_path, class: 'text-blue-500 hover:underline' %>
+          </div>
+          <% if user_signed_in? %>
+            <div class="flex items-center">
+              <%= link_to "Edit Profile", edit_manager_path(current_user.id), class: "inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2" %>
+              <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: 'text-red-500 hover:underline' %>
+            </div>
+          <% end %>
+          <!-- Add more navigation links as needed -->
+        </nav>
+      </div>
+    </div>
+
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+    <%= yield %>
+  </body>
+</html>
