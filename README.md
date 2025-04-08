@@ -1,24 +1,8 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+HomesUnited is a non-profit organization that seeks to end homelessness in South Florida.
+The main thrust behind the organization is placing homeless individuals in
+comfortable living accomodations across nearly 100 homes.
 
-Things you may want to cover:
-
-- Ruby version
-
-- System dependencies
-
-- Configuration
-
-- Database creation
-
-- Database initialization
-
-- How to run the test suite
-
-- Services (job queues, cache servers, search engines, etc.)
-
-- Deployment instructions
-
-- ...
+With that, managing the vacancies in the homes and tracking who is in what bed
+can be a complex and challenging process. This application helps to solve that.
